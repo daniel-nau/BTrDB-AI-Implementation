@@ -39,7 +39,3 @@ This project implements a versioned B-tree data structure in Rust, designed to s
 
 - To insert data into the B-tree, use the `insert` method from the `BTree` struct.
 - To process timeseries data, utilize the `process_data` method from the `TimeseriesProcessor` struct.
-
-## Contributing
-
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
