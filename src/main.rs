@@ -4,9 +4,13 @@ use storage::VersionedBTree;
 
 fn main() {
     let mut btree = VersionedBTree::new();
+
+    // Insert some data
     btree.insert(10, vec![1, 2, 3]);
     btree.insert(20, vec![4, 5, 6]);
     btree.insert(5, vec![7, 8, 9]);
+    btree.insert(15, vec![10, 11, 12]);
+    btree.insert(25, vec![13, 14, 15]);
 
     // Search for existing keys
     if let Some(value) = btree.search(10) {
@@ -28,17 +32,7 @@ fn main() {
         println!("Key 15 not found");
     }
 
-    // Insert more keys
-    btree.insert(15, vec![10, 11, 12]);
-    btree.insert(25, vec![13, 14, 15]);
-
     // Search for newly inserted keys
-    if let Some(value) = btree.search(15) {
-        println!("Found value for key 15: {:?}", value);
-    } else {
-        println!("Key 15 not found");
-    }
-
     if let Some(value) = btree.search(25) {
         println!("Found value for key 25: {:?}", value);
     } else {
