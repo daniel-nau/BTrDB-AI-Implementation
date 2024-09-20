@@ -1,0 +1,1 @@
+// This file contains utility functions and types that support the main functionalities of the project.
