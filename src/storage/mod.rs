@@ -1,3 +1,3 @@
-pub mod btree;
+pub mod versioned_btree;
 
-pub use btree::BTree;
+pub use versioned_btree::VersionedBTree;

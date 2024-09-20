@@ -1,19 +1,60 @@
 mod storage;
-mod timeseries;
 
-use storage::BTree;
-use timeseries::TimeseriesProcessor;
+use storage::VersionedBTree;
 
 fn main() {
-    let mut btree = BTree::new();
-    btree.insert(10, vec![]);
-    btree.insert(20, vec![]);
-    btree.insert(5, vec![]);
+    let mut btree = VersionedBTree::new();
+    btree.insert(10, vec![1, 2, 3]);
+    btree.insert(20, vec![4, 5, 6]);
+    btree.insert(5, vec![7, 8, 9]);
 
-    println!("Search for 10: {}", btree.search(10)); // Should print true
-    println!("Search for 15: {}", btree.search(15)); // Should print false
+    // Search for existing keys
+    if let Some(value) = btree.search(10) {
+        println!("Found value for key 10: {:?}", value);
+    } else {
+        println!("Key 10 not found");
+    }
 
-    let processor = TimeseriesProcessor::new();
-    let data = processor.query_data(0, 10);
-    println!("Queried data: {:?}", data); // Should print an empty vector
+    if let Some(value) = btree.search(20) {
+        println!("Found value for key 20: {:?}", value);
+    } else {
+        println!("Key 20 not found");
+    }
+
+    // Search for a non-existing key
+    if let Some(value) = btree.search(15) {
+        println!("Found value for key 15: {:?}", value);
+    } else {
+        println!("Key 15 not found");
+    }
+
+    // Insert more keys
+    btree.insert(15, vec![10, 11, 12]);
+    btree.insert(25, vec![13, 14, 15]);
+
+    // Search for newly inserted keys
+    if let Some(value) = btree.search(15) {
+        println!("Found value for key 15: {:?}", value);
+    } else {
+        println!("Key 15 not found");
+    }
+
+    if let Some(value) = btree.search(25) {
+        println!("Found value for key 25: {:?}", value);
+    } else {
+        println!("Key 25 not found");
+    }
+
+    // Search for a key that was not inserted
+    if let Some(value) = btree.search(30) {
+        println!("Found value for key 30: {:?}", value);
+    } else {
+        println!("Key 30 not found");
+    }
+
+    // Range query example
+    let range_results = btree.range_query(5, 20);
+    for (timestamp, value) in range_results {
+        println!("Found value for timestamp {}: {:?}", timestamp, value);
+    }
 }
